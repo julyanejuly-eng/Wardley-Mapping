@@ -3,24 +3,23 @@
     {
       "label": "IA Generativa",
       "x": 0.28,
-      "y": 0.82,
-      "impact": "Atendimento personalizado e experiências hipercontextualizadas em tempo real.",
-      "risks": "Viés algorítmico, privacidade, dependência tecnológica.",
-      "opportunities": "Automação inteligente, novos produtos financeiros, eficiência operacional.",
+      "y": 0.9,
+      "impact": "Atendimento personalizado e experiências hipercontextualizadas.",
+      "risks": "Viés algorítmico; privacidade; dependência tecnológica.",
+      "opportunities": "Automação inteligente; novos produtos; eficiência operacional.",
       "status": "Iniciativa ativa",
       "levers": [
         "Pilotos controlados",
-        "Treinamento de times",
         "Governança de IA",
-        "Privacidade/LGPD"
+        "LGPD by design"
       ]
     },
     {
       "label": "Experiências Imersivas",
-      "x": 0.24,
-      "y": 0.76,
-      "impact": "Novos formatos de relacionamento e educação financeira.",
-      "risks": "Custo de adoção e hardware; acessibilidade; fadiga de uso.",
+      "x": 0.26,
+      "y": 0.8,
+      "impact": "Novos formatos de relacionamento e educação financeira imersiva.",
+      "risks": "Acesso a hardware; custo; fadiga de uso.",
       "opportunities": "Onboarding e suporte imersivos; eventos digitais; capacitação.",
       "status": "Exploração",
       "levers": [
@@ -30,11 +29,11 @@
     },
     {
       "label": "Computação Quântica",
-      "x": 0.2,
-      "y": 0.68,
-      "impact": "Aceleração de otimizações, risco e criptografia pós‑quântica.",
-      "risks": "Maturidade tecnológica baixa; custo elevado.",
-      "opportunities": "Pesquisa aplicada; segurança pós‑quântica; simulações complexas.",
+      "x": 0.22,
+      "y": 0.7,
+      "impact": "Otimizações e segurança pós‑quântica.",
+      "risks": "Maturidade baixa; custo elevado.",
+      "opportunities": "Pesquisa aplicada; simulações; postura pós‑quântica.",
       "status": "Observação",
       "levers": [
         "P&D",
@@ -43,11 +42,11 @@
     },
     {
       "label": "Dronização",
-      "x": 0.22,
+      "x": 0.24,
       "y": 0.6,
-      "impact": "Logística e inspeções em áreas remotas com menor custo.",
-      "risks": "Regulação aeronáutica; segurança; aceitação social.",
-      "opportunities": "Operações e auditorias em campo; inclusão territorial.",
+      "impact": "Logística/inspeções remotas com menor custo.",
+      "risks": "Regulação; segurança; aceitação social.",
+      "opportunities": "Operações em campo; inclusão territorial.",
       "status": "Pilotos pontuais",
       "levers": [
         "Sandbox regulatório",
@@ -56,11 +55,11 @@
     },
     {
       "label": "Pagamentos Invisíveis",
-      "x": 0.56,
+      "x": 0.6,
       "y": 0.62,
       "impact": "Cobrança embutida e recorrente com atrito mínimo.",
-      "risks": "Fraude; consentimento inadequado; UX opaca.",
-      "opportunities": "Pix Automático; embedded finance; fidelização em ecossistemas.",
+      "risks": "Fraude; consentimento; UX opaca.",
+      "opportunities": "Pix Automático; embedded finance; fidelização.",
       "status": "Expansão",
       "levers": [
         "Open Finance",
@@ -70,11 +69,11 @@
     },
     {
       "label": "CBDCs e Tokenização",
-      "x": 0.42,
+      "x": 0.46,
       "y": 0.54,
-      "impact": "Liquidação mais eficiente e novos modelos de ativos.",
-      "risks": "Regulação em evolução; interoperabilidade; custódia.",
-      "opportunities": "Pilotos com reguladores; RWA; integração com registradoras.",
+      "impact": "Liquidação eficiente e novos modelos de ativos.",
+      "risks": "Regulação; interoperabilidade; custódia.",
+      "opportunities": "Pilotos com reguladores; RWA; integração registradoras.",
       "status": "Exploração",
       "levers": [
         "Pilotos regulatórios",
@@ -83,10 +82,10 @@
     },
     {
       "label": "Finanças Verdes",
-      "x": 0.62,
+      "x": 0.66,
       "y": 0.46,
       "impact": "Amplia impacto socioambiental e portfólio verde.",
-      "risks": "Greenwashing; mensuração inadequada.",
+      "risks": "Greenwashing; mensuração fraca.",
       "opportunities": "Linhas de crédito verde; PPPs; taxonomias ESG.",
       "status": "Prioridade estratégica",
       "levers": [
@@ -96,10 +95,10 @@
     },
     {
       "label": "Identidade Digital",
-      "x": 0.48,
+      "x": 0.52,
       "y": 0.44,
       "impact": "Onboarding seguro, prevenção à fraude e experiência sem atrito.",
-      "risks": "Privacidade; exclusão digital; falhas de prova de vida.",
+      "risks": "Privacidade; exclusão digital; prova de vida.",
       "opportunities": "KYC forte; identidade soberana; biometria avançada.",
       "status": "Em adoção",
       "levers": [
@@ -109,20 +108,20 @@
     },
     {
       "label": "Bancos de Propósito Social",
-      "x": 0.32,
+      "x": 0.36,
       "y": 0.36,
-      "impact": "Amplia inclusão e impacto social, alinhado à missão pública.",
-      "risks": "Sustentação econômica; escala e governança.",
+      "impact": "Inclusão e impacto social alinhados à missão pública.",
+      "risks": "Sustentação econômica; governança.",
       "opportunities": "Produtos inclusivos; educação financeira; microcrédito.",
       "status": "Programas em curso",
       "levers": [
         "Impacto social",
-        "Parcerias com 3º setor"
+        "Parcerias 3º setor"
       ]
     },
     {
       "label": "Open Finance",
-      "x": 0.76,
+      "x": 0.8,
       "y": 0.3,
       "impact": "Jornadas integradas e ofertas personalizadas via dados compartilhados.",
       "risks": "Consentimento; interoperabilidade; segurança de APIs.",

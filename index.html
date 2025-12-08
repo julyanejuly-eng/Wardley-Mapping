@@ -1,303 +1,279 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mapa Foresight CAIXA — Pilares & Tendências</title>
-  <style>
-    :root{
-      /* Paleta elegante roxo/rosa em tons suaves */
-      --bg: #ffffff;
-      --ink: #1f1f2e;
-      --muted: #6f6a7c;
-      --axis: #cec5df;
-      --grid: #ebe6f5;
-      --pill-bg: #f6f1fb;
-      --accent: #6e56a3;     /* roxo suave */
-      --accent-2: #9d8ec4;   /* roxo claro */
-      --rose: #f2b6cd;       /* rosa suave */
-      --rose-2: #f7c9dc;     /* rosa mais claro */
-      --panel: #fdf7fd;
-      --shadow: rgba(33, 12, 51, .08);
-      --chip: #efe9fa;
-    }
-
-    *{box-sizing: border-box}
-    body{font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-         margin: 24px; background: var(--bg); color: var(--ink);}
-    header{margin-bottom: 12px; text-align: center;}
-    h1{margin: 0; font-size: 20px; color: var(--accent);}
-    .subtitle{margin-top: 4px; color: var(--muted); font-size: 12px;}
-
-    .wrap{display:flex; gap:16px; align-items:flex-start; max-width: 1140px; margin: 0 auto;}
-    .left{width: 220px; padding-top: 24px;}
-    .pillar{height: 72px; display:flex; align-items:center; justify-content:flex-end;
-            padding-right: 10px; color: var(--muted); font-size: 13px;}
-
-    .canvasWrap{position:relative; flex:1}
-    canvas{border:1px solid var(--grid); border-radius:16px; width:100%; height:560px;
-           background:#fff; box-shadow:0 8px 28px var(--shadow)}
-
-    .xlabels{position:absolute; left:230px; right:28px; bottom:10px;
-             display:flex; justify-content:space-between; color:var(--muted); font-size:13px; pointer-events:none}
-    .footer-note{margin-top:8px; color:var(--muted); font-size:11px; text-align:center}
-
-    /* Painel de detalhe */
-    .detail{position:fixed; right:24px; top:24px; width: 380px; max-width: 90vw;
-      background: var(--panel); border: 1px solid var(--grid); border-radius: 16px;
-      box-shadow: 0 18px 48px var(--shadow); padding: 16px; display:none}
-    .detail h3{margin: 0 0 8px 0; font-size: 18px; color: var(--accent)}
-    .detail section{margin: 8px 0}
-    .detail h4{margin:0 0 4px 0; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing:.03em}
-    .detail p{margin:0 0 6px 0; font-size: 13px; line-height: 1.35}
-    .detail .tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:4px}
-    .tag{background: var(--pill-bg); border:1px solid var(--axis); padding:2px 8px; border-radius:999px; font-size:11px}
-    .detail .x{position:absolute; top:10px; right:12px; background:transparent; border:0;
-               font-size:18px; cursor:pointer; color: var(--muted)}
-
-    /* Tooltip suave para acessibilidade (opcional) */
-    .tip{position:absolute; transform: translate(-50%, -120%);
-         background: #111; color:#fff; font-size:11px; padding:4px 8px; border-radius: 6px; display:none}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa Foresight CAIXA — Tendências × Pilares</title>
+<style>
+:root{
+  /* Paleta CAIXA — tons secundários elegantes (sem azul/laranja fortes) */
+  --bg:#fff; --ink:#1f1f2e; --muted:#6f6a7c;
+  --axis:#c7b6df;              /* linhas principais */
+  --grid:#ebe6f5;              /* grade secundária */
+  --panel:#fdf7fd;
+  --pill-shadow: rgba(33,12,51,.10);
+  /* Cores de pílula (ciclo) */
+  --c1:#6e56a3;  --c2:#9d8ec4;  --c3:#c7b6df;  --c4:#f2b6cd;
+  --c5:#8bd1c2;  --c6:#a3b3c8;  --c7:#d5c7eb;  --c8:#f7c9dc;
+}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:24px;background:var(--bg);color:var(--ink)}
+header{text-align:center;margin-bottom:8px}
+h1{margin:0;color:var(--c1);font-size:20px}
+.sub{color:var(--muted);font-size:12px;margin-top:4px}
+.wrap{display:flex;gap:12px;max-width:1200px;margin:0 auto}
+.left{width:260px;padding-top:22px}
+.pillarTick{height:0;position:relative}
+.pillarTick span{position:absolute;left:0;transform:translateY(-50%);color:var(--muted);font-size:13px}
+canvas{border:1px solid var(--grid);border-radius:16px;width:100%;height:600px;background:#fff;box-shadow:0 8px 28px var(--pill-shadow)}
+.xlabels{position:absolute;left:270px;right:28px;bottom:10px;display:flex;justify-content:space-between;color:var(--muted);font-size:13px;pointer-events:none}
+.tools{display:flex;gap:8px;margin:10px 0 0 272px}
+.btn{border:1px solid var(--axis);background:#fff;border-radius:10px;padding:6px 10px;font-size:12px;color:#3b3355;cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.detail{position:fixed;right:24px;top:24px;width:400px;max-width:92vw;background:var(--panel);
+  border:1px solid var(--grid);border-radius:16px;box-shadow:0 18px 48px var(--pill-shadow);padding:16px;display:none}
+.detail h3{margin:0 0 8px 0;color:var(--c1);font-size:18px}
+.detail h4{margin:10px 0 4px 0;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+.detail p{margin:0 0 6px 0;font-size:13px;line-height:1.35}
+.tag{display:inline-block;background:#f6f1fb;border:1px solid var(--axis);padding:2px 8px;border-radius:999px;font-size:11px;margin:2px 4px 0 0}
+.detail .x{position:absolute;top:10px;right:12px;background:transparent;border:0;font-size:18px;color:var(--muted);cursor:pointer}
+.footer-note{margin-top:10px;color:var(--muted);font-size:11px;text-align:center}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Mapa Foresight CAIXA — Conexões entre Tendências e Pilares Estratégicos</h1>
-    <div class="subtitle">Clique em uma tendência para ver o impacto no cliente, riscos, oportunidades, status e alavancas de inovação.</div>
-  </header>
+<header>
+  <h1>Mapa Foresight CAIXA — Tendências × Pilares</h1>
+  <div class="sub">Arraste as pílulas para reposicionar. Clique para ver o painel com impacto, riscos, oportunidades, status e alavancas.</div>
+</header>
 
-  <div class="wrap">
-    <!-- Coluna de pilares (eixo vertical) -->
-    <div class="left" id="pillarCol"></div>
-
-    <!-- Mapa -->
-    <div class="canvasWrap">
-      <canvas id="map"></canvas>
-      <div class="xlabels">
-        <div>Gênese</div>
-        <div>Custom</div>
-        <div>Produto</div>
-        <div>Commodity</div>
-      </div>
-      <div id="tooltip" class="tip"></div>
-    </div>
+<div class="wrap">
+  <div class="left"><div id="pillarTicks"></div></div>
+  <div style="position:relative;flex:1">
+    <canvas id="map"></canvas>
+    <div class="xlabels"><div>Gênese</div><div>Custom</div><div>Produto</div><div>Commodity</div></div>
   </div>
+</div>
 
-  <div class="footer-note">Fonte: Célula de Futuros e Inovação — GEINA | Mapa interativo (GitHub Pages)</div>
+<div class="tools">
+  <button class="btn" id="copyBtn">Copiar posições (JSON)</button>
+  <button class="btn" id="resetBtn">Recarregar dados</button>
+</div>
 
-  <!-- Painel de detalhe -->
-  <aside id="detail" class="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle">
-    <button class="x" aria-label="Fechar" onclick="closeDetail()">✕</button>
-    <h3 id="dTitle">Tendência</h3>
-    <section>
-      <h4>Impacto no Cliente</h4>
-      <p id="dImpact">—</p>
-    </section>
-    <section>
-      <h4>Riscos</h4>
-      <p id="dRisks">—</p>
-    </section>
-    <section>
-      <h4>Oportunidades</h4>
-      <p id="dOpps">—</p>
-    </section>
-    <section>
-      <h4>Status</h4>
-      <p id="dStatus">—</p>
-    </section>
-    <section>
-      <h4>Alavancas de inovação</h4>
-      <div id="dLevers" class="tags"></div>
-    </section>
-  </aside>
+<div class="footer-note">Fonte: Célula de Futuros e Inovação — GEINA | Mapa interativo (GitHub Pages)</div>
 
-  <script>
-    // ===== Configurações rápidas =====
-    const PILARES = [
-      "Cliente no centro",
-      "Eficiência e rentabilidade",
-      "Atuar no ecossistema",
-      "Tecnologia, inovação",
-      "Sustentabilidade",
-      "Pessoas, cultura e agilidade"
-    ];
+<aside id="detail" class="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle">
+  <button class="x" aria-label="Fechar" onclick="closeDetail()">✕</button>
+  <h3 id="dTitle">Tendência</h3>
+  <h4>Impacto no Cliente</h4><p id="dImpact">—</p>
+  <h4>Riscos</h4><p id="dRisks">—</p>
+  <h4>Oportunidades</h4><p id="dOpps">—</p>
+  <h4>Status</h4><p id="dStatus">—</p>
+  <h4>Alavancas de inovação</h4><div id="dLevers"></div>
+</aside>
 
-    // Layout
-    const LEFT_PAD = 230;   // espaço para pilares
-    const RIGHT_PAD = 28;
-    const TOP_PAD = 28;
-    const BOTTOM_PAD = 64;  // espaço para rótulos do eixo X
-    const BUBBLE_PAD_X = 12, BUBBLE_PAD_Y = 8;
+<script>
+// ===== Configurações =====
+const PILARES = [
+  "Cliente no centro",
+  "Eficiência e rentabilidade",
+  "Atuar no ecossistema",
+  "Tecnologia, inovação",
+  "Sustentabilidade",
+  "Pessoas, cultura e agilidade"
+];
+const COLORS = [
+  getVar('--c1'), getVar('--c2'), getVar('--c3'), getVar('--c4'),
+  getVar('--c5'), getVar('--c6'), getVar('--c7'), getVar('--c8')
+];
 
-    // Canvas
-    const canvas = document.getElementById('map');
-    const ctx = canvas.getContext('2d');
-    let NODES = [];
-    let hitboxes = [];
+const LEFT_PAD=270, RIGHT_PAD=28, TOP_PAD=28, BOTTOM_PAD=72;
+const PILL_H=30, PILL_RX=16, TEXT_PADX=12;
+const canvas=document.getElementById('map'), ctx=canvas.getContext('2d');
+let nodes=[], boxes=[], dragging=null, dragOffset={x:0,y:0};
 
-    // Utilidades
-    const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+function getVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function roundedRect(x,y,w,h,r){
+  const p=new Path2D(); const rr=Math.min(r,h/2,w/2);
+  p.moveTo(x+rr,y); p.lineTo(x+w-rr,y); p.quadraticCurveTo(x+w,y,x+w,y+rr);
+  p.lineTo(x+w,y+h-rr); p.quadraticCurveTo(x+w,y+h,x+w-rr,y+h);
+  p.lineTo(x+rr,y+h); p.quadraticCurveTo(x,y+h,x,y+h-rr);
+  p.lineTo(x,y+rr); p.quadraticCurveTo(x,y,x+rr,y); return p;
+}
 
-    function roundedRectPath(x, y, w, h, r=12){
-      const p = new Path2D();
-      const rr = Math.min(r, h/2, w/2);
-      p.moveTo(x+rr, y);
-      p.lineTo(x+w-rr, y);
-      p.quadraticCurveTo(x+w, y, x+w, y+rr);
-      p.lineTo(x+w, y+h-rr);
-      p.quadraticCurveTo(x+w, y+h, x+w-rr, y+h);
-      p.lineTo(x+rr, y+h);
-      p.quadraticCurveTo(x, y+h, x, y+h-rr);
-      p.lineTo(x, y+rr);
-      p.quadraticCurveTo(x, y, x+rr, y);
-      p.closePath();
-      return p;
-    }
+function layoutPillarTicks(){
+  const cont=document.getElementById('pillarTicks'); cont.innerHTML='';
+  const h=canvas.getBoundingClientRect().height;
+  const top=TOP_PAD, bottom=h-BOTTOM_PAD;
+  const gap=(bottom-top)/(PILARES.length-1);
+  let prevY=0;
+  PILARES.forEach((name,i)=>{
+    const y = top + i*gap;
+    const d = document.createElement('div'); d.className='pillarTick';
+    d.style.marginTop = (i===0 ? y : (y - prevY)) + 'px';
+    const s = document.createElement('span'); s.textContent = name;
+    d.appendChild(s); cont.appendChild(d); prevY = y;
+  });
+}
 
-    function renderPillars(){
-      const col = document.getElementById('pillarCol');
-      col.innerHTML = "";
-      const itemHeight = (canvas.getBoundingClientRect().height - TOP_PAD - BOTTOM_PAD) / (PILARES.length);
-      PILARES.forEach((p) => {
-        const div = document.createElement('div');
-        div.className = 'pillar';
-        div.style.height = itemHeight + 'px';
-        div.textContent = p;
-        col.appendChild(div);
-      });
-    }
+function resize(){
+  const r=canvas.getBoundingClientRect();
+  canvas.width=r.width*devicePixelRatio;
+  canvas.height=r.height*devicePixelRatio;
+  ctx.setTransform(1,0,0,1,0,0); ctx.scale(devicePixelRatio,devicePixelRatio);
+  layoutPillarTicks(); draw();
+}
 
-    function resize(){
-      const rect = canvas.getBoundingClientRect();
-      canvas.width  = rect.width  * devicePixelRatio;
-      canvas.height = rect.height * devicePixelRatio;
-      ctx.setTransform(1,0,0,1,0,0);
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-      draw();
-    }
+function drawGrid(left,right,top,bottom){
+  // linhas secundárias (grid) dentro da área interna
+  ctx.strokeStyle=getVar('--grid'); ctx.lineWidth=1;
+  const rows = (PILARES.length - 1) * 2;      // 2x densidade horizontal
+  const cols = 12;                             // 12 colunas verticais
+  for(let r=1;r<rows;r++){
+    const y = top + r*(bottom-top)/rows;
+    ctx.beginPath(); ctx.moveTo(left,y); ctx.lineTo(right,y); ctx.stroke();
+  }
+  for(let c=1;c<cols;c++){
+    const x = left + c*(right-left)/cols;
+    ctx.beginPath(); ctx.moveTo(x,top); ctx.lineTo(x,bottom); ctx.stroke();
+  }
+  // linhas principais (eixos/guia)
+  ctx.strokeStyle=getVar('--axis');
+  ctx.beginPath(); ctx.moveTo(left,top); ctx.lineTo(left,bottom); ctx.lineTo(right,bottom); ctx.stroke(); // moldura L
+  // horizontais principais (pilares)
+  const gap=(bottom-top)/(PILARES.length-1);
+  for(let i=0;i<PILARES.length;i++){
+    const y = top + i*gap; ctx.beginPath(); ctx.moveTo(left,y); ctx.lineTo(right,y); ctx.stroke();
+  }
+  // verticais principais (Gênese/Custom/Produto/Commodity)
+  for(let i=1;i<=3;i++){
+    const x = left + i*(right-left)/3;
+    ctx.beginPath(); ctx.moveTo(x,top); ctx.lineTo(x,bottom); ctx.stroke();
+  }
+}
 
-    function drawAxes(){
-      const rect = canvas.getBoundingClientRect();
-      const left = LEFT_PAD, right = rect.width - RIGHT_PAD;
-      const top = TOP_PAD, bottom = rect.height - BOTTOM_PAD;
+function layoutPills(){
+  const r=canvas.getBoundingClientRect();
+  const left=LEFT_PAD, right=r.width-RIGHT_PAD, top=TOP_PAD, bottom=r.height-BOTTOM_PAD;
+  const w=right-left, h=bottom-top;
+  ctx.font='13px Inter, system-ui, sans-serif';
+  let pills = nodes.map((n,i)=>{
+    const cx = left + Math.min(Math.max(n.x,0),1)*w;
+    const cy = bottom - Math.min(Math.max(n.y,0),1)*h;
+    const tw = ctx.measureText(n.label).width;
+    const pw = tw + TEXT_PADX*2 + 6;
+    return {i, cx, cy, w: pw, h: PILL_H};
+  });
+  // "Dodge" vertical leve para evitar sobreposição quando estão em colunas próximas
+  pills.sort((a,b)=> a.cy - b.cy);
+  const MIN_GAP = 34;
+  for(let i=1;i<pills.length;i++){
+    const prev = pills[i-1], cur = pills[i];
+    const nearX = Math.abs(cur.cx - prev.cx) < 120;
+    const overlap = (prev.cy + MIN_GAP) - cur.cy;
+    if(nearX && overlap > 0){ cur.cy += overlap; }
+  }
+  return {pills, left, right, top, bottom};
+}
 
-      // eixo e moldura suave
-      ctx.strokeStyle = css('--axis'); ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(left, top);
-      ctx.lineTo(left, bottom);
-      ctx.lineTo(right, bottom);
-      ctx.stroke();
+function plot(){
+  const r=canvas.getBoundingClientRect();
+  const left=LEFT_PAD, right=r.width-RIGHT_PAD, top=TOP_PAD, bottom=r.height-BOTTOM_PAD;
+  drawGrid(left,right,top,bottom);
+  const {pills} = layoutPills();
+  boxes=[];
+  pills.forEach((p)=>{
+    const n = nodes[p.i];
+    const bx = Math.min(Math.max(p.cx - p.w/2, left+4), right - p.w - 4);
+    const by = Math.min(Math.max(p.cy - p.h/2, top+4), bottom - p.h - 4);
+    const color = COLORS[p.i % COLORS.length];
+    const path = roundedRect(bx, by, p.w, p.h, PILL_RX);
+    ctx.shadowColor='rgba(33,12,51,.12)'; ctx.shadowBlur=8;
+    ctx.fillStyle = color; ctx.fill(path);
+    ctx.shadowBlur=0; ctx.lineWidth=1; ctx.strokeStyle='#ffffff22'; ctx.stroke(path);
+    ctx.fillStyle = '#fff'; ctx.fillText(n.label, bx + TEXT_PADX, by + 19);
+    boxes.push({x:bx,y:by,w:p.w,h:p.h,index:p.i});
+  });
+}
 
-      // linhas horizontais (grades)
-      const gap = (bottom - top) / (PILARES.length - 1);
-      ctx.strokeStyle = css('--grid');
-      for(let i=0;i<PILARES.length;i++){
-        const y = top + i * gap;
-        ctx.beginPath();
-        ctx.moveTo(left, y);
-        ctx.lineTo(right, y);
-        ctx.stroke();
-      }
-    }
+function draw(){ ctx.clearRect(0,0,canvas.getBoundingClientRect().width,canvas.getBoundingClientRect().height); plot(); }
 
-    function plotNodes(){
-      const rect = canvas.getBoundingClientRect();
-      const left = LEFT_PAD, right = rect.width - RIGHT_PAD;
-      const top = TOP_PAD, bottom = rect.height - BOTTOM_PAD;
-      const w = right - left, h = bottom - top;
-      hitboxes = [];
+function hit(mx,my){
+  for(let i=boxes.length-1;i>=0;i--){
+    const b=boxes[i];
+    if(mx>=b.x && mx<=b.x+b.w && my>=b.y && my<=b.y+b.h) return b;
+  }
+  return null;
+}
 
-      NODES.forEach((n, idx) => {
-        const x = left + Math.min(Math.max(n.x,0),1) * w;
-        const y = bottom - Math.min(Math.max(n.y,0),1) * h;
+// ===== Interação: drag + click =====
+canvas.addEventListener('mousedown', ev=>{
+  const rect=canvas.getBoundingClientRect();
+  const mx=ev.clientX-rect.left, my=ev.clientY-rect.top;
+  const b = hit(mx,my);
+  if(b){
+    dragging = b;
+    dragOffset.x = mx - b.x;
+    dragOffset.y = my - b.y;
+  }
+});
+window.addEventListener('mousemove', ev=>{
+  if(!dragging) return;
+  const rect=canvas.getBoundingClientRect();
+  let mx=ev.clientX-rect.left, my=ev.clientY-rect.top;
+  const left=LEFT_PAD, right=rect.width-RIGHT_PAD, top=TOP_PAD, bottom=rect.height-BOTTOM_PAD;
+  const w=right-left, h=bottom-top;
+  let nx = Math.min(Math.max(mx - dragOffset.x + dragging.w/2, left), right);
+  let ny = Math.min(Math.max(my - dragOffset.y + dragging.h/2, top), bottom);
+  const node = nodes[dragging.index];
+  node.x = (nx - left)/w;
+  node.y = (bottom - ny)/h;
+  draw();
+});
+window.addEventListener('mouseup', ev=>{
+  if(dragging){ dragging = null; return; } // se estava arrastando, não trata como clique
+  const rect=canvas.getBoundingClientRect();
+  const mx=ev.clientX-rect.left, my=ev.clientY-rect.top;
+  const b = hit(mx,my);
+  if(b){ openDetail(nodes[b.index]); }
+});
 
-        // texto
-        ctx.font = '13px Inter, system-ui, sans-serif';
-        const text = n.label || 'Tendência';
-        const tw = ctx.measureText(text).width;
-        const bw = tw + BUBBLE_PAD_X*2;
-        const bh = 28; // altura do "pill"
-        const bx = Math.min(Math.max(x - bw/2, left+4), right - bw - 4);
-        const by = y - bh/2;
+// ===== Painel de detalhe =====
+function openDetail(n){
+  const p = document.getElementById('detail');
+  document.getElementById('dTitle').textContent = n.label || 'Tendência';
+  document.getElementById('dImpact').textContent = n.impact || '—';
+  document.getElementById('dRisks').textContent = n.risks || '—';
+  document.getElementById('dOpps').textContent = n.opportunities || '—';
+  document.getElementById('dStatus').textContent = n.status || '—';
+  const dl = document.getElementById('dLevers'); dl.innerHTML="";
+  let levers = n.levers || n.lever || [];
+  if(typeof levers==='string') levers=[levers];
+  levers.forEach(l=>{ const s=document.createElement('span'); s.className='tag'; s.textContent=l; dl.appendChild(s); });
+  p.style.display='block';
+}
+function closeDetail(){ document.getElementById('detail').style.display='none'; }
+window.closeDetail = closeDetail;
 
-        // cores suaves (roxo/rosa) alternando
-        const fill = n.color || (idx % 2 ? css('--accent') : css('--rose'));
-        const stroke = idx % 2 ? css('--accent-2') : css('--rose-2');
-
-        // desenha pill
-        const p = roundedRectPath(bx, by, bw, bh, 14);
-        ctx.shadowColor = css('--shadow');
-        ctx.shadowBlur = 8;
-        ctx.fillStyle = fill;
-        ctx.fill(p);
-        ctx.shadowBlur = 0;
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = stroke;
-        ctx.stroke(p);
-
-        // label
-        ctx.fillStyle = '#fff';
-        ctx.fillText(text, bx + BUBBLE_PAD_X, by + 18);
-
-        // hitbox
-        hitboxes.push({x:bx, y:by, w:bw, h:bh, n});
-      });
-    }
-
-    function draw(){
-      const r = canvas.getBoundingClientRect();
-      ctx.clearRect(0, 0, r.width, r.height);
-      drawAxes();
-      plotNodes();
-    }
-
-    // Interação
-    canvas.addEventListener('click', (ev) => {
-      const rect = canvas.getBoundingClientRect();
-      const mx = ev.clientX - rect.left, my = ev.clientY - rect.top;
-      for(const hb of hitboxes){
-        if(mx >= hb.x && mx <= hb.x + hb.w && my >= hb.y && my <= hb.y + hb.h){
-          openDetail(hb.n);
-          return;
-        }
-      }
-      closeDetail();
-    });
-
-    function openDetail(n){
-      const d = document.getElementById('detail');
-      document.getElementById('dTitle').textContent = n.label || 'Tendência';
-      document.getElementById('dImpact').textContent = n.impact || '—';
-      document.getElementById('dRisks').textContent = n.risks || '—';
-      document.getElementById('dOpps').textContent = n.opportunities || '—';
-      document.getElementById('dStatus').textContent = n.status || '—';
-      const dl = document.getElementById('dLevers'); dl.innerHTML = "";
-      let levers = n.levers || n.lever || [];
-      if(typeof levers === 'string') levers = [levers];
-      levers.forEach(l => {
-        const s = document.createElement('span');
-        s.className = 'tag';
-        s.textContent = l;
-        dl.appendChild(s);
-      });
-      d.style.display = 'block';
-    }
-    function closeDetail(){ document.getElementById('detail').style.display = 'none'; }
-
-    // Boot
-    async function boot(){
-      // Preenche a coluna dos pilares com alturas proporcionais
-      renderPillars();
-      try{
-        const res = await fetch('data.json', {cache:'no-store'});
-        const data = await res.json();
-        NODES = Array.isArray(data.nodes) ? data.nodes : [];
-      }catch(e){ NODES = []; }
-      resize();
-    }
-    window.addEventListener('resize', resize);
-    boot();
-  </script>
+// ===== Boot =====
+async function boot(){
+  try{
+    const res = await fetch('data.json',{cache:'no-store'});
+    const data = await res.json();
+    nodes = Array.isArray(data.nodes) ? data.nodes : [];
+  }catch(e){ nodes = []; }
+  resize();
+}
+document.getElementById('copyBtn').addEventListener('click', ()=>{
+  const payload = {nodes: nodes.map(n=>({
+    label:n.label, x:+n.x.toFixed(3), y:+n.y.toFixed(3),
+    impact:n.impact, risks:n.risks, opportunities:n.opportunities, status:n.status, levers:n.levers
+  }))};
+  navigator.clipboard.writeText(JSON.stringify(payload,null,2));
+  alert('Posições copiadas para a área de transferência!');
+});
+document.getElementById('resetBtn').addEventListener('click', ()=> boot());
+window.addEventListener('resize', resize);
+boot();
+</script>
 </body>
 </html>

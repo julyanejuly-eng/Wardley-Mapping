@@ -1,26 +1,27 @@
-# Wardley Mapping (Demo GitHub Pages)
+# Mapa Foresight CAIXA — Interativo (GitHub Pages)
 
-Este repositório publica um site estático via **GitHub Pages** com um mapa simples.
-- O arquivo inicial é **`index.html`**.
-- Os dados do mapa ficam em **`data.json`**.
+Este repositório publica um **Wardley Map** simplificado com:
+- **6 pilares** na lateral (eixo vertical)
+- **Gênese · Custom · Produto · Commodity** no eixo horizontal
+- **Pílulas clicáveis** (tendências) com painel de detalhes
+- **Drag-and-drop** para movimentar as tendências e copiar as posições
+- **Grade completa** (horizontal + vertical) **apenas na área interna** entre os eixos
 
-## Como visualizar
-1. Ative o GitHub Pages em **Settings → Pages → Source: _Deploy from a branch_**, **Branch: `main`**, **Folder: `/ (root)`** → **Save**.
-2. Acesse o link gerado (ex.: `https://SEUUSUARIO.github.io/NOMEDOREPO/`).
+## Como publicar (Pages)
+1. Vá em **Settings → Pages** e escolha:
+   - **Source:** Deploy from a branch
+   - **Branch:** `main`
+   - **Folder:** `/ (root)`
+   - **Save**
+2. Abra o link gerado (`https://SEU_USUARIO.github.io/SEU_REPO/`).
 
-## Como editar o mapa
-1. Abra o arquivo **`data.json`** e clique no ícone de lápis (**Edit**).
-2. Ajuste a lista `nodes`:
-   ```json
-   [
-     { "label": "Nome do item", "x": 0.50, "y": 0.65 }
-   ]
-   ```
-   - `x`: posição horizontal (0 = gênesis, 1 = commodity)
-   - `y`: visibilidade (0 = baixo, 1 = alto)
-
-3. Clique em **Commit changes**. Atualize a página do site para ver as mudanças.
+## Como editar
+- **Posições e textos:** edite o arquivo `data.json`.
+  - `x` = maturidade (0 = Gênese ... 1 = Commodity)
+  - `y` = visibilidade/viabilidade (0 = baixo ... 1 = alto)
+  - campos do painel: `impact`, `risks`, `opportunities`, `status`, `levers` (lista)
+- **Cores e pilares:** no `index.html`, altere as variáveis `--c1..--c8` e a lista `PILARES`.
 
 ## Dicas
-- O arquivo **`index.html`** precisa ser um **HTML de verdade** (com `<html> ... </html>`). Renomear `.docx`/`.pptx` para `.html` não funciona.
-- Se o site abrir com caracteres estranhos, substitua o arquivo **`index.html`** por este aqui e confirme que existe um **`data.json`** válido na raiz.
+- Arraste as pílulas para testar posições. Clique em **Copiar posições (JSON)** e cole no `data.json` para salvar a nova geometria.
+- Se quiser reduzir/aumentar a densidade da **grade**, ajuste `rows` e `cols` na função `drawGrid` dentro do `index.html`.
