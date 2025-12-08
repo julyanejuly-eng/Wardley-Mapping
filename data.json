@@ -1,29 +1,113 @@
 {
   "nodes": [
     {
-      "label": "Sandbox",
-      "x": 0.15,
-      "y": 0.8
+      "label": "IA Generativa no Atendimento",
+      "x": 0.48,
+      "y": 0.78,
+      "desc": "Aplicação de GenAI em atendimento e operações para acelerar resolução, personalizar respostas e apoiar times.",
+      "lever": "Pilotos controlados; capacitação de pessoas; governança de IA; privacidade e LGPD by design",
+      "links": [
+        1,
+        7
+      ]
     },
     {
-      "label": "Open Finance (Fase 4)",
-      "x": 0.45,
-      "y": 0.65
+      "label": "Open Finance (Dados + Iniciação)",
+      "x": 0.42,
+      "y": 0.7,
+      "desc": "Ampliação do compartilhamento de dados e iniciação de pagamentos para ofertas integradas e jornadas fluidas.",
+      "lever": "APIs abertas; UX de consentimento; parcerias com fintechs; observabilidade de APIs",
+      "links": [
+        2,
+        6
+      ]
     },
     {
-      "label": "Pix Automático",
+      "label": "Pagamentos Embutidos / Pix Automático",
       "x": 0.55,
-      "y": 0.6
+      "y": 0.66,
+      "desc": "Cobranças recorrentes e embedded payments em jornadas do cliente, reduzindo fricção e inadimplência.",
+      "lever": "Parcerias com ecossistemas; sandbox regulatório; automação antifraude",
+      "links": [
+        1,
+        3
+      ]
     },
     {
-      "label": "Compliance",
+      "label": "Superapp / Ecossistema Integrado",
+      "x": 0.68,
+      "y": 0.58,
+      "desc": "Integra serviços financeiros e não financeiros, elevando engajamento e valor ao cliente.",
+      "lever": "Design de plataforma; marketplace de parceiros; identidade e confiança digital",
+      "links": [
+        2,
+        5
+      ]
+    },
+    {
+      "label": "Banking as a Service (BaaS)",
+      "x": 0.6,
+      "y": 0.52,
+      "desc": "Oferta de capacidades bancárias via APIs para terceiros criarem soluções sob a marca própria.",
+      "lever": "Arquitetura modular; contratos e SLAs; gestão de risco compartilhado",
+      "links": [
+        1,
+        2,
+        6
+      ]
+    },
+    {
+      "label": "Cibersegurança & Antifraude",
+      "x": 0.3,
+      "y": 0.82,
+      "desc": "Defesa adaptativa, detecção comportamental e zero trust em canais e integrações.",
+      "lever": "Arquitetura zero trust; SIME/UEBA; educação do cliente; times de resposta",
+      "links": [
+        7
+      ]
+    },
+    {
+      "label": "Cloud & Modernização do Core",
+      "x": 0.62,
+      "y": 0.4,
+      "desc": "Migração e modernização de sistemas para escalar, reduzir custo e acelerar entregas.",
+      "lever": "Refatoração por domínios; observabilidade; FinOps; automação CI/CD",
+      "links": [
+        5,
+        8
+      ]
+    },
+    {
+      "label": "Personalização Data‑Driven",
+      "x": 0.45,
+      "y": 0.72,
+      "desc": "Ofertas e jornadas personalizadas a partir de analytics e modelos de propensão.",
+      "lever": "Camada de dados unificada; modelos de recomendação; testes A/B contínuos",
+      "links": [
+        0,
+        1
+      ]
+    },
+    {
+      "label": "ESG & Finanças Verdes",
+      "x": 0.72,
+      "y": 0.38,
+      "desc": "Produtos com impacto social/ambiental, mensuração e transparência dos indicadores.",
+      "lever": "Taxonomias ESG; parcerias público‑privadas; incentivos e linhas verdes",
+      "links": [
+        3
+      ]
+    },
+    {
+      "label": "Blockchain & Tokenização de Ativos (RWA)",
       "x": 0.35,
-      "y": 0.3
-    },
-    {
-      "label": "Commodity (Infra)",
-      "x": 0.9,
-      "y": 0.2
+      "y": 0.55,
+      "desc": "Uso de DLT para liquidação e tokenização de ativos do mundo real, com compliance.",
+      "lever": "Pilotos regulatórios; integração com registradoras; governança e custódia",
+      "links": [
+        1,
+        5
+      ]
     }
   ]
 }

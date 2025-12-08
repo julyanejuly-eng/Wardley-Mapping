@@ -3,99 +3,112 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wardley Mapping – Demo Simples</title>
+  <title>Wardley Map — CAIXA (Roxo e Rosa)</title>
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
-    header { margin-bottom: 16px; }
-    .tag { display: inline-block; padding: 4px 8px; border-radius: 8px; background: #eef; margin-right: 6px; font-size: 12px; }
-    #status { margin-top: 8px; font-size: 12px; color: #555; }
-    canvas { border: 1px solid #ddd; border-radius: 12px; width: 100%; max-width: 980px; height: 420px; }
-    footer { margin-top: 24px; font-size: 12px; color: #666; }
+    :root{
+      --bg: #ffffff;
+      --ink: #1f1f2e;
+      --muted: #6b6578;
+      --grid: #ddd6e8;
+      --axis: #c7b6df;
+      --accent: #6a1b9a;   /* roxo principal */
+      --accent-2: #ba68c8; /* roxo claro */
+      --highlight: #f48fb1;/* rosa claro */
+      --chip: #f3e5f5;
+      --panel: #fdf7fd;
+      --shadow: rgba(80,0,90,.1);
+    }
+    *{box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:24px;background:var(--bg);color:var(--ink)}
+    header{margin-bottom:12px}
+    h1{margin:0 0 6px 0;font-size:20px;color:var(--accent)}
+    .muted{color:var(--muted);font-size:12px}
+    .wrap{display:flex;gap:16px;align-items:flex-start}
+    .leftLabels{width:160px}
+    .pillar{height:28px;display:flex;align-items:center;justify-content:flex-end;
+      padding-right:8px;color:var(--muted);font-size:12px}
+    .canvasWrap{position:relative;flex:1}
+    canvas{border:1px solid var(--grid);border-radius:12px;width:100%;max-width:980px;height:500px;background:#fff;box-shadow:0 2px 12px var(--shadow)}
+    .chips{margin:4px 0 0 0;display:flex;gap:6px;flex-wrap:wrap}
+    .chip{background:var(--chip);border:1px solid var(--accent-2);color:var(--accent);padding:2px 8px;border-radius:999px;font-size:11px}
+    .xlabels{position:absolute;left:180px;right:20px;bottom:8px;display:flex;justify-content:space-between;color:var(--muted);font-size:12px;pointer-events:none}
+    .legend{margin-top:8px;color:var(--muted);font-size:12px}
+    .detail{position:fixed;right:24px;bottom:24px;max-width:380px;background:var(--panel);
+      border:1px solid var(--grid);box-shadow:0 8px 24px var(--shadow);border-radius:12px;padding:16px;display:none}
+    .detail h3{margin:0 0 6px 0;font-size:16px;color:var(--accent)}
+    .detail p{margin:0 0 8px 0;font-size:13px;color:var(--ink)}
+    .detail .lever{display:inline-block;background:var(--highlight);color:#6a003a;
+      padding:2px 8px;border-radius:999px;font-size:11px}
+    .detail .x{position:absolute;top:8px;right:10px;background:transparent;border:0;font-size:18px;cursor:pointer;color:var(--muted)}
+    .tip{font-size:11px;color:var(--muted)}
   </style>
 </head>
 <body>
   <header>
-    <h1>Wardley Mapping — Demo simples</h1>
-    <div>
-      <span class="tag">Editável</span>
-      <span class="tag">Carrega <code>data.json</code></span>
-      <span class="tag">GitHub Pages</span>
+    <h1>Wardley Map — Pilares & Tendências (CAIXA)</h1>
+    <div class="muted">Clique em uma tendência para ver a descrição e a alavanca de inovação sugerida.</div>
+    <div class="chips">
+      <span class="chip">Editável</span>
+      <span class="chip">Lê <code>data.json</code></span>
+      <span class="chip">GitHub Pages</span>
     </div>
-    <div id="status">Carregando dados…</div>
   </header>
 
-  <canvas id="mapCanvas"></canvas>
+  <div class="wrap">
+    <div class="leftLabels" id="pillarCol"></div>
+    <div class="canvasWrap">
+      <canvas id="mapCanvas"></canvas>
+      <div class="xlabels">
+        <div>Gênesis</div>
+        <div>Produto</div>
+        <div>Commodity</div>
+      </div>
+    </div>
+  </div>
 
-  <footer>
-    <p>Para atualizar o mapa, edite o arquivo <code>data.json</code> no GitHub e faça Commit.</p>
-  </footer>
+  <div class="legend">Os pilares à esquerda representam a viabilidade/visibilidade; o eixo horizontal mostra a maturidade (Gênesis → Produto → Commodity).</div>
+
+  <div class="detail" id="detailPanel">
+    <button class="x" aria-label="Fechar" onclick="closeDetail()">✕</button>
+    <h3 id="dTitle">Tendência</h3>
+    <p id="dDesc">Descrição da tendência.</p>
+    <div class="lever" id="dLever">Alavanca</div>
+  </div>
 
   <script>
-    const c = document.getElementById('mapCanvas');
-    const ctx = c.getContext('2d');
-
-    function resize() {
-      // Set canvas size to CSS size
-      const rect = c.getBoundingClientRect();
-      c.width = rect.width * devicePixelRatio;
-      c.height = rect.height * devicePixelRatio;
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-      drawAxes();
+    window.PILARES = ["Cliente","Pessoas","Processos","Inovação","Tecnologia","Sustentabilidade"];
+    const LEFT_PAD=180,BOTTOM_PAD=60,NODE_RADIUS=6;
+    const c=document.getElementById('mapCanvas'),ctx=c.getContext('2d');
+    let nodes=[],clickables=[];
+    function renderPillars(){
+      const col=document.getElementById('pillarCol');col.innerHTML="";
+      for(let i=0;i<PILARES.length;i++){const d=document.createElement('div');d.className='pillar';d.textContent=PILARES[i];col.appendChild(d);}
     }
-
-    function drawAxes() {
-      const rect = c.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
-      ctx.strokeStyle = '#999';
-      ctx.lineWidth = 1;
-      // axes
-      ctx.beginPath();
-      ctx.moveTo(60, 20);
-      ctx.lineTo(60, rect.height - 40);
-      ctx.lineTo(rect.width - 20, rect.height - 40);
-      ctx.stroke();
-      // labels
-      ctx.fillStyle = '#333';
-      ctx.font = '12px system-ui, sans-serif';
-      ctx.fillText('Visibilidade', 10, 14);
-      ctx.fillText('Gênesis  →  Produto  →  Commodity', rect.width/2 - 120, rect.height - 16);
+    function resize(){const r=c.getBoundingClientRect();c.width=r.width*devicePixelRatio;c.height=r.height*devicePixelRatio;ctx.setTransform(1,0,0,1,0,0);ctx.scale(devicePixelRatio,devicePixelRatio);draw();}
+    function drawAxes(){
+      const r=c.getBoundingClientRect(),l=LEFT_PAD,t=20,b=r.height-BOTTOM_PAD,right=r.width-20;
+      ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--axis');ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(l,t);ctx.lineTo(l,b);ctx.lineTo(right,b);ctx.stroke();
+      ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--grid');
+      const gap=(b-t)/(PILARES.length-1);
+      for(let i=0;i<PILARES.length;i++){const y=t+i*gap;ctx.beginPath();ctx.moveTo(l,y);ctx.lineTo(right,y);ctx.stroke();}
     }
-
-    function plotNodes(nodes=[]) {
-      const rect = c.getBoundingClientRect();
-      const left = 60;
-      const bottom = rect.height - 40;
-      const width = rect.width - 80;
-      const height = rect.height - 70;
-
-      ctx.fillStyle = '#1f6feb';
-      ctx.strokeStyle = '#1f6feb';
-      nodes.forEach(n => {
-        const x = left + (Math.min(Math.max(n.x,0),1) * width);
-        const y = bottom - (Math.min(Math.max(n.y,0),1) * height);
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI*2);
-        ctx.fill();
-        ctx.font = '12px system-ui, sans-serif';
-        ctx.fillText(n.label || 'item', x + 6, y - 6);
+    function plotNodes(){
+      const r=c.getBoundingClientRect(),l=LEFT_PAD,t=20,b=r.height-BOTTOM_PAD,right=r.width-20,w=right-l,h=b-t;
+      clickables=[];const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      nodes.forEach(n=>{const x=l+Math.min(Math.max(n.x,0),1)*w,y=b-Math.min(Math.max(n.y,0),1)*h;
+        ctx.fillStyle=n.color||accent;ctx.beginPath();ctx.arc(x,y,NODE_RADIUS,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#111';ctx.font='12px system-ui,sans-serif';ctx.fillText(n.label||'item',x+8,y-8);
+        clickables.push({n,x,y,r:NODE_RADIUS+3});
       });
     }
-
-    async function boot() {
-      try {
-        const res = await fetch('data.json', {cache: 'no-store'});
-        const data = await res.json();
-        document.getElementById('status').textContent = 'Dados carregados.';
-        resize();
-        plotNodes(data.nodes || []);
-      } catch (e) {
-        document.getElementById('status').textContent = 'Não foi possível ler o data.json. Suba um data.json válido.';
-        resize();
-      }
-    }
-
-    window.addEventListener('resize', resize);
-    boot();
+    function draw(){const r=c.getBoundingClientRect();ctx.clearRect(0,0,r.width,r.height);drawAxes();plotNodes();}
+    c.addEventListener('click',ev=>{const r=c.getBoundingClientRect(),mx=ev.clientX-r.left,my=ev.clientY-r.top;
+      for(const b of clickables){const dx=mx-b.x,dy=my-b.y;if(dx*dx+dy*dy<=b.r*b.r){openDetail(b.n);return;}}closeDetail();});
+    function openDetail(n){const p=document.getElementById('detailPanel');document.getElementById('dTitle').textContent=n.label||'Tendência';document.getElementById('dDesc').textContent=n.desc||'Sem descrição.';document.getElementById('dLever').textContent=n.lever||'Alavanca não definida';p.style.display='block';}
+    function closeDetail(){document.getElementById('detailPanel').style.display='none';}
+    async function boot(){renderPillars();try{const r=await fetch('data.json',{cache:'no-store'});const d=await r.json();nodes=Array.isArray(d.nodes)?d.nodes:[];}catch(e){nodes=[];}resize();}
+    window.addEventListener('resize',resize);boot();
   </script>
 </body>
 </html>
