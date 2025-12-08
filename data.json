@@ -1,112 +1,137 @@
 {
   "nodes": [
     {
-      "label": "IA Generativa no Atendimento",
-      "x": 0.48,
-      "y": 0.78,
-      "desc": "Aplicação de GenAI em atendimento e operações para acelerar resolução, personalizar respostas e apoiar times.",
-      "lever": "Pilotos controlados; capacitação de pessoas; governança de IA; privacidade e LGPD by design",
-      "links": [
-        1,
-        7
-      ]
-    },
-    {
-      "label": "Open Finance (Dados + Iniciação)",
-      "x": 0.42,
-      "y": 0.7,
-      "desc": "Ampliação do compartilhamento de dados e iniciação de pagamentos para ofertas integradas e jornadas fluidas.",
-      "lever": "APIs abertas; UX de consentimento; parcerias com fintechs; observabilidade de APIs",
-      "links": [
-        2,
-        6
-      ]
-    },
-    {
-      "label": "Pagamentos Embutidos / Pix Automático",
-      "x": 0.55,
-      "y": 0.66,
-      "desc": "Cobranças recorrentes e embedded payments em jornadas do cliente, reduzindo fricção e inadimplência.",
-      "lever": "Parcerias com ecossistemas; sandbox regulatório; automação antifraude",
-      "links": [
-        1,
-        3
-      ]
-    },
-    {
-      "label": "Superapp / Ecossistema Integrado",
-      "x": 0.68,
-      "y": 0.58,
-      "desc": "Integra serviços financeiros e não financeiros, elevando engajamento e valor ao cliente.",
-      "lever": "Design de plataforma; marketplace de parceiros; identidade e confiança digital",
-      "links": [
-        2,
-        5
-      ]
-    },
-    {
-      "label": "Banking as a Service (BaaS)",
-      "x": 0.6,
-      "y": 0.52,
-      "desc": "Oferta de capacidades bancárias via APIs para terceiros criarem soluções sob a marca própria.",
-      "lever": "Arquitetura modular; contratos e SLAs; gestão de risco compartilhado",
-      "links": [
-        1,
-        2,
-        6
-      ]
-    },
-    {
-      "label": "Cibersegurança & Antifraude",
-      "x": 0.3,
+      "label": "IA Generativa",
+      "x": 0.28,
       "y": 0.82,
-      "desc": "Defesa adaptativa, detecção comportamental e zero trust em canais e integrações.",
-      "lever": "Arquitetura zero trust; SIME/UEBA; educação do cliente; times de resposta",
-      "links": [
-        7
+      "impact": "Atendimento personalizado e experiências hipercontextualizadas em tempo real.",
+      "risks": "Viés algorítmico, privacidade, dependência tecnológica.",
+      "opportunities": "Automação inteligente, novos produtos financeiros, eficiência operacional.",
+      "status": "Iniciativa ativa",
+      "levers": [
+        "Pilotos controlados",
+        "Treinamento de times",
+        "Governança de IA",
+        "Privacidade/LGPD"
       ]
     },
     {
-      "label": "Cloud & Modernização do Core",
+      "label": "Experiências Imersivas",
+      "x": 0.24,
+      "y": 0.76,
+      "impact": "Novos formatos de relacionamento e educação financeira.",
+      "risks": "Custo de adoção e hardware; acessibilidade; fadiga de uso.",
+      "opportunities": "Onboarding e suporte imersivos; eventos digitais; capacitação.",
+      "status": "Exploração",
+      "levers": [
+        "Parcerias",
+        "Labs de inovação"
+      ]
+    },
+    {
+      "label": "Computação Quântica",
+      "x": 0.2,
+      "y": 0.68,
+      "impact": "Aceleração de otimizações, risco e criptografia pós‑quântica.",
+      "risks": "Maturidade tecnológica baixa; custo elevado.",
+      "opportunities": "Pesquisa aplicada; segurança pós‑quântica; simulações complexas.",
+      "status": "Observação",
+      "levers": [
+        "P&D",
+        "Parcerias acadêmicas"
+      ]
+    },
+    {
+      "label": "Dronização",
+      "x": 0.22,
+      "y": 0.6,
+      "impact": "Logística e inspeções em áreas remotas com menor custo.",
+      "risks": "Regulação aeronáutica; segurança; aceitação social.",
+      "opportunities": "Operações e auditorias em campo; inclusão territorial.",
+      "status": "Pilotos pontuais",
+      "levers": [
+        "Sandbox regulatório",
+        "Parcerias locais"
+      ]
+    },
+    {
+      "label": "Pagamentos Invisíveis",
+      "x": 0.56,
+      "y": 0.62,
+      "impact": "Cobrança embutida e recorrente com atrito mínimo.",
+      "risks": "Fraude; consentimento inadequado; UX opaca.",
+      "opportunities": "Pix Automático; embedded finance; fidelização em ecossistemas.",
+      "status": "Expansão",
+      "levers": [
+        "Open Finance",
+        "Parcerias com varejo",
+        "Antifraude"
+      ]
+    },
+    {
+      "label": "CBDCs e Tokenização",
+      "x": 0.42,
+      "y": 0.54,
+      "impact": "Liquidação mais eficiente e novos modelos de ativos.",
+      "risks": "Regulação em evolução; interoperabilidade; custódia.",
+      "opportunities": "Pilotos com reguladores; RWA; integração com registradoras.",
+      "status": "Exploração",
+      "levers": [
+        "Pilotos regulatórios",
+        "Arquitetura DLT"
+      ]
+    },
+    {
+      "label": "Finanças Verdes",
       "x": 0.62,
-      "y": 0.4,
-      "desc": "Migração e modernização de sistemas para escalar, reduzir custo e acelerar entregas.",
-      "lever": "Refatoração por domínios; observabilidade; FinOps; automação CI/CD",
-      "links": [
-        5,
-        8
+      "y": 0.46,
+      "impact": "Amplia impacto socioambiental e portfólio verde.",
+      "risks": "Greenwashing; mensuração inadequada.",
+      "opportunities": "Linhas de crédito verde; PPPs; taxonomias ESG.",
+      "status": "Prioridade estratégica",
+      "levers": [
+        "ESG by design",
+        "Parcerias público‑privadas"
       ]
     },
     {
-      "label": "Personalização Data‑Driven",
-      "x": 0.45,
-      "y": 0.72,
-      "desc": "Ofertas e jornadas personalizadas a partir de analytics e modelos de propensão.",
-      "lever": "Camada de dados unificada; modelos de recomendação; testes A/B contínuos",
-      "links": [
-        0,
-        1
+      "label": "Identidade Digital",
+      "x": 0.48,
+      "y": 0.44,
+      "impact": "Onboarding seguro, prevenção à fraude e experiência sem atrito.",
+      "risks": "Privacidade; exclusão digital; falhas de prova de vida.",
+      "opportunities": "KYC forte; identidade soberana; biometria avançada.",
+      "status": "Em adoção",
+      "levers": [
+        "Identidade governamental",
+        "Parcerias tecnológicas"
       ]
     },
     {
-      "label": "ESG & Finanças Verdes",
-      "x": 0.72,
-      "y": 0.38,
-      "desc": "Produtos com impacto social/ambiental, mensuração e transparência dos indicadores.",
-      "lever": "Taxonomias ESG; parcerias público‑privadas; incentivos e linhas verdes",
-      "links": [
-        3
+      "label": "Bancos de Propósito Social",
+      "x": 0.32,
+      "y": 0.36,
+      "impact": "Amplia inclusão e impacto social, alinhado à missão pública.",
+      "risks": "Sustentação econômica; escala e governança.",
+      "opportunities": "Produtos inclusivos; educação financeira; microcrédito.",
+      "status": "Programas em curso",
+      "levers": [
+        "Impacto social",
+        "Parcerias com 3º setor"
       ]
     },
     {
-      "label": "Blockchain & Tokenização de Ativos (RWA)",
-      "x": 0.35,
-      "y": 0.55,
-      "desc": "Uso de DLT para liquidação e tokenização de ativos do mundo real, com compliance.",
-      "lever": "Pilotos regulatórios; integração com registradoras; governança e custódia",
-      "links": [
-        1,
-        5
+      "label": "Open Finance",
+      "x": 0.76,
+      "y": 0.3,
+      "impact": "Jornadas integradas e ofertas personalizadas via dados compartilhados.",
+      "risks": "Consentimento; interoperabilidade; segurança de APIs.",
+      "opportunities": "Iniciação de pagamento; marketplace financeiro; crédito assertivo.",
+      "status": "Operação e expansão",
+      "levers": [
+        "APIs abertas",
+        "UX de consentimento",
+        "Observabilidade"
       ]
     }
   ]
