@@ -1,0 +1,38 @@
+/* Base */
+* { box-sizing: border-box; }
+body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background:#f6f8fb; color:#2d3436; }
+header { background:#fff; border-bottom:3px solid #005CA9; padding:24px 12px; text-align:center; }
+header h1 { margin:0; color:#005CA9; font-weight:700; font-size:28px; }
+
+/* Legenda topo */
+.legenda { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:14px; }
+.pilar { background: var(--cor); color:#fff; padding:8px 12px; border-radius:6px; font-weight:600; font-size:13px; }
+
+/* Layout principal */
+main { display:flex; gap:20px; padding:20px; align-items:stretch; }
+.mapa { flex: 1 1 68%; position:relative; background:#fff; border-radius:12px; padding:20px 16px 28px; box-shadow:0 6px 16px rgba(0,0,0,.08); }
+.painel { flex: 1 1 32%; background:#fff; border-radius:12px; padding:20px; box-shadow:0 6px 16px rgba(0,0,0,.08); display:flex; flex-direction:column; gap:8px; }
+
+/* Mini legenda acima do painel */
+.legendinha { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+.pilar-mini { background: var(--cor); color:#fff; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:600; }
+
+/* Eixos e grid */
+.eixo-vertical { position:absolute; left:8px; top:10px; writing-mode:vertical-rl; transform:rotate(180deg); color:#7a869a; font-weight:600; }
+.grid { position:relative; height:520px; border:1px dashed #cfd6df; border-radius:8px; background:linear-gradient(90deg, transparent 24%, rgba(0,0,0,.05) 25%, transparent 26%), linear-gradient(90deg, transparent 49%, rgba(0,0,0,.05) 50%, transparent 51%), linear-gradient(90deg, transparent 74%, rgba(0,0,0,.05) 75%, transparent 76%), linear-gradient(0deg, transparent 24%, rgba(0,0,0,.05) 25%, transparent 26%), linear-gradient(0deg, transparent 49%, rgba(0,0,0,.05) 50%, transparent 51%), linear-gradient(0deg, transparent 74%, rgba(0,0,0,.05) 75%, transparent 76%); background-size:25% 100%,25% 100%,25% 100%,100% 25%,100% 25%,100% 25%; background-position:0 0,25% 0,50% 0,0 0,0 25%,0 50%; }
+.tick { position:absolute; color:#7a869a; font-size:12px; font-weight:600; }
+.v-top { top:6px; right:12px; }
+.v-bottom { bottom:6px; right:12px; }
+.h-genesis { bottom: -20px; left:4%; }
+.h-custom { bottom: -20px; left:29%; }
+.h-product { bottom: -20px; left:54%; }
+.h-commodity { bottom: -20px; left:79%; }
+
+/* Pílulas de tendências */
+.tendencias { position:absolute; inset:0; }
+.pill { position:absolute; left:5%; top:50%; transform:translate(-50%, -50%); background:var(--cor, #005CA9); color:#fff; border:none; border-radius:999px; padding:10px 14px; font-weight:600; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,.12); transition:transform .15s ease, box-shadow .15s ease; }
+.pill:hover { transform:translate(-50%, -50%) scale(1.07); box-shadow:0 8px 18px rgba(0,0,0,.18); }
+
+/* Painel */
+.painel h2 { margin:6px 0 8px; color:#005CA9; }
+.painel p { margin:6px 0; font-size:14px; line-height:1.4; }
